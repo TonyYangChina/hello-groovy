@@ -1,0 +1,40 @@
+server:
+  port: 8081
+  context-path: /hello-groovy
+  # 开启压缩
+  compression:
+    # 开启
+    enabled: true
+    # 执行压缩的阈值，默认为2048
+    min-response-size: 1024
+    # 指定要压缩的MIME type，多个以逗号分隔
+    mime-types:
+      - application/json
+      - application/xml
+      - text/xml
+      - text/plain
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://192.168.97.180:3306/wjdbmgrapp?autoReconnect=true
+    username: mgrapp_all
+    password: mgrapp123!@#
+    driver-class-name: com.mysql.jdbc.Driver
+    platform: mysql
+    initialize: true
+    sql-script-encoding: UTF-8
+  jmx:
+    enabled: false
+  data:
+    mongodb:
+      uri: mongodb://manager_app:manager_app123!#$@192.168.97.180:27017/manager_app
+  redis:
+    host: 192.168.97.180
+    port: 6381
+    database: 5
+    pool:
+      max-active: 12
+      max-wait: 1000
+      max-idle: 8
+      min-idle: 0
+    timeout: 5000
