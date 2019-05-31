@@ -1,4 +1,4 @@
-package cn.yami.common.annotation;
+package cn.yami.helgro.common.annotation;
 
 import java.lang.annotation.Documented
 import java.lang.annotation.ElementType
@@ -10,5 +10,5 @@ import java.lang.annotation.Target
 @Target([ElementType.METHOD, ElementType.TYPE])
 @Documented
 @interface Log {
-    value() default "";
+    String value() default "";
 }

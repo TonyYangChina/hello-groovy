@@ -1,4 +1,4 @@
-package cn.yami.common.util
+package cn.yami.helgro.common.util
 
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes

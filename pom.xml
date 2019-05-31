@@ -61,6 +61,13 @@
             <version>2.9.0</version>
         </dependency>
 
+        <!--存在的意义？-->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>8.5.0</version>
+        </dependency>
+
         <!--数据支持 end-->
 
         <!--切面支持-->
@@ -91,6 +98,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.6.0</version>
+        </dependency>
         <!--web支持 end -->
 
         <!--数据格式、类型支持 begin-->
@@ -113,6 +126,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.5</version>
         </dependency>
+        <dependency>
+            <groupId>org.hashids</groupId>
+            <artifactId>hashids</artifactId>
+            <version>1.0.3</version>
+        </dependency>
 
         <!--数据格式支持 end-->
 
@@ -131,6 +149,15 @@
             <version>1.16.20</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--日志支持-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+
+
+
 
     </dependencies>
 

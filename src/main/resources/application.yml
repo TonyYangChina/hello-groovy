@@ -16,6 +16,9 @@ server:
 spring:
   profiles: dev
   datasource:
+    #url: jdbc:mysql://129.204.120.115:3306/mins?autoReconnect=true&useSSL=false
+    #username: 888
+    #password: 888
     url: jdbc:mysql://192.168.97.180:3306/wjdbmgrapp?autoReconnect=true
     username: mgrapp_all
     password: mgrapp123!@#
@@ -38,3 +41,19 @@ spring:
       max-idle: 8
       min-idle: 0
     timeout: 5000
+  #jpa:
+    #hibernate:
+      #ddl-auto: none
+    #database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+hibernate:
+  hbm2ddl:
+    auto: none
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.spring: WARN
+  # path: /home/www/log/manager_app
+  # path: ./logs

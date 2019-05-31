@@ -1,8 +1,14 @@
-package cn.yami.web
+package cn.yami.helgro.web
 
+import cn.yami.helgro.common.annotation.Log
 import groovy.util.logging.Slf4j
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+
+import javax.servlet.http.HttpServletRequest
 
 /**
  * Groovy 问候
@@ -12,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/hello")
 class SayHelloController {
 
+    @Transactional
+    @Log("Hell的say方法")
     @RequestMapping("/say")
-    def say() {
+    def say(HttpServletRequest request, Model model) {
         return "hello groovy"
     }
 
@@ -195,25 +203,5 @@ class SayHelloController {
         println excite("jfdf")
 
 
-    }
-
-    @Override
-    MetaClass getMetaClass() {
-        return super.getMetaClass()
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize()
-    }
-
-    @Override
-    int hashCode() {
-        return super.hashCode()
-    }
-
-    @Override
-    boolean equals(Object obj) {
-        return super.equals(obj)
     }
 }
