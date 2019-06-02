@@ -14,26 +14,27 @@ server:
       - text/xml
       - text/plain
 spring:
-  profiles: dev
+  # profiles: dev
   datasource:
-    #url: jdbc:mysql://129.204.120.115:3306/mins?autoReconnect=true&useSSL=false
-    #username: 888
-    #password: 888
-    url: jdbc:mysql://192.168.97.180:3306/wjdbmgrapp?autoReconnect=true
-    username: mgrapp_all
-    password: mgrapp123!@#
+    # 个人服务器 的 数据库服务器
+    url: jdbc:mysql://129.204.120.115:3306/mins?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: xxxx
+    #url: jdbc:mysql://192.168.97.180:3306/wjdbmgrapp?autoReconnect=true
+    #username: mgrapp_all
+    #password: mgrapp123!@#
     driver-class-name: com.mysql.jdbc.Driver
     platform: mysql
     initialize: true
     sql-script-encoding: UTF-8
   jmx:
     enabled: false
-  data:
-    mongodb:
-      uri: mongodb://manager_app:manager_app123!#$@192.168.97.180:27017/manager_app
+  #data:
+    #mongodb:
+      #uri: mongodb://manager_app:manager_app123!#$@192.168.97.180:27017/manager_app
   redis:
-    host: 192.168.97.180
-    port: 6381
+    host: 129.204.120.115
+    port: 6379
     database: 5
     pool:
       max-active: 12
@@ -48,7 +49,7 @@ spring:
 
 hibernate:
   hbm2ddl:
-    auto: none
+    auto: update
     dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 logging:

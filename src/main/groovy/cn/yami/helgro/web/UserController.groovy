@@ -27,6 +27,8 @@ class UserController {
     @Autowired
     private UserService userService
 
+
+
     @PostMapping(value = "/send_sms", produces = "application/json")
     sendValidMsg(@RequestBody Map<String, Object> body) {
         String phone = body.get("phone")
@@ -59,9 +61,28 @@ class UserController {
         def token = request.getHeader(Constants.Token_Header_Name)
         User user = userService.findUserByToken(token)
 
-        List<Role> roles = user.roles
+        // List<Role> roles = user.roles
         // return [ret: 0, msg: "OK", data: roles.toList().collect{[name : it.name]}]
         return [ret: 0, msg: "OK", data: '']
 
     }
+
+    @Transactional
+    @PostMapping(value = "/add", produces = "application/json")
+    def add(HttpServletRequest request) {
+
+        def user = new User(phone:'18906910522', name: '李四', status: 1)
+
+       /* user.addToRoles(new Role(id: 10014, name: "指挥家", status: 0))
+        user.addToRoles(new Role(id: 10015, name: "程序员", status: 0))*/
+        user.save(flush: true)
+
+        // def userRole = new UserRole()
+
+        // user.addToUserRoles(userRole)
+
+        return [ret: 0, msg: "OK", data: '']
+
+    }
+
 }

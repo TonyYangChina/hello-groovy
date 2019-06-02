@@ -15,19 +15,19 @@ class UserRole implements Serializable{
     /**
      * 关联的用户
      */
-    User user
+    //User user
     /**
      * 关联的角色
      */
-    Role role
+    //Role role
 
     int status
 
-    static mapping = {
+   /* static mapping = {
         version false
         id composite: ['user', 'role']
         table 'user_role'
         user column: 'user_id'
         role column: 'role_id'
-    }
+    }*/
 }

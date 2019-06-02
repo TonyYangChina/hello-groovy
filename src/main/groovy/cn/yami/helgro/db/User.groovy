@@ -39,12 +39,13 @@ class User {
     /**
      * 一对多关系
      */
-    static hasMany = [userRoles: UserRole]
+    /*static hasMany = [userRoles: UserRole]
 
     List<Role> getRoles() {
         userRoles.collect{ it.role }.findAll{it.status==0}.toList()
-    }
+    }*/
 
+    static hasMany = [roles: Role]
 
     @SuppressWarnings("GroovyAssignabilityCheck")
     static constraints = {

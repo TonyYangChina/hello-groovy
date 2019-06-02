@@ -16,12 +16,16 @@ class Role implements Serializable{
     String name
     int status
 
-    User user
+    static belongsTo = User
+    static hasMany = [user: User]
+
+    // 这里设计成非级联User和User_Role表，仅由User_Role维护User和Role之间的关系
+    /*User user
     static belongsTo = [user: User]
 
     static constraints = {
         user nullable: true
-    }
+    }*/
 
     @SuppressWarnings("GroovyAssignabilityCheck")
     static mapping = {
