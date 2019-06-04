@@ -29,9 +29,15 @@ spring:
     sql-script-encoding: UTF-8
   jmx:
     enabled: false
-  #data:
-    #mongodb:
-      #uri: mongodb://manager_app:manager_app123!#$@192.168.97.180:27017/manager_app
+  data:
+    mongodb:
+      # uri配置
+      # uri: mongodb://hellogro:hellogro!#$@129.204.120.115:27017/app
+      host: 129.204.120.115
+      port: 27017
+      username: hellogro
+      password: hellogro
+      database: app
   redis:
     host: 129.204.120.115
     port: 6379
