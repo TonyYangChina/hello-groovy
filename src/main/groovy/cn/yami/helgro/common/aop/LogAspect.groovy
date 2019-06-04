@@ -32,8 +32,8 @@ class LogAspect {
     void pointcut() {}*/
 
 
-    @Around("@annotation(log)")
-    Object logAround(ProceedingJoinPoint point, Log log) {
+    @Around("@annotation(cn.yami.helgro.common.annotation.Log)")
+    Object logAround(ProceedingJoinPoint point) {
         Object result = null
         long beginTime = System.currentTimeMillis()
         try {

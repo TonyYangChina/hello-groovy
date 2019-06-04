@@ -43,7 +43,7 @@ class AuthorController {
         // grail建议不使用立刻刷新
         if (!author.save(flush:true, failOnError:true)) {
             author.errors.each {
-                log.error(it)
+                log.error(it as String)
             }
         }
 
@@ -100,7 +100,7 @@ class AuthorController {
             if (null != nickName) {
                 like('nickName', "%"+nickName+"%")
             }
-        }
+        } as List<Author>
 
         return [ret: 0, msg: "OK", data: authors.collect{[name : it.name]}]
 
