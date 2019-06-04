@@ -1,0 +1,5 @@
+.gitignore
+.idea/
+hello-groovy.iml
+/logs/
+/target
