@@ -2,6 +2,7 @@ package cn.yami.helgro.db.mongo
 
 import groovy.transform.Canonical
 import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.index.Index
 
 /**
  * 商品
@@ -10,15 +11,21 @@ import org.springframework.data.annotation.Id
 @Canonical
 @SuppressWarnings("GroovyUnusedDeclaration")
 class Product {
-    // 库存量单位：如：SPU + 颜色 + 尺码，就是一个SKU
+
+    // TODO @Index 索引的添加
+    // Long code
+
     @Id
-    String sku
+    String id
     String type
     String title
     String description
     // 平台ID
     String asin
 
-    ProductDetails details
-    ProductPricing pricing
+    // 上架情况：0-未上架，1-上架
+    Integer status
+
+    Map<String, Object> details
+    Map<String, Object> pricing
 }

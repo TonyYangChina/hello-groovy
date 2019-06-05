@@ -1,5 +1,6 @@
 server:
   port: 8081
+  # springboot 2.0版本前的配置
   context-path: /hello-groovy
   # 开启压缩
   compression:
@@ -13,6 +14,8 @@ server:
       - application/xml
       - text/xml
       - text/plain
+  #servlet:
+    #context-path: /hello-groovy
 spring:
   # profiles: dev
   datasource:
@@ -25,18 +28,22 @@ spring:
     #password: mgrapp123!@#
     driver-class-name: com.mysql.jdbc.Driver
     platform: mysql
+    # v2.0前的配置
     initialize: true
     sql-script-encoding: UTF-8
+    # v2.o后的配置初始化数据
+    # initialization-mode: always
   jmx:
     enabled: false
   data:
     mongodb:
-      # uri配置
-      # uri: mongodb://hellogro:hellogro!#$@129.204.120.115:27017/app
-      host: 129.204.120.115
-      port: 27017
-      username: hellogro
-      password: hellogro
+      # uri配置 mongodb:/用户名:密码@IP:端口/数据库名称
+      uri: mongodb://admin:123456@129.204.120.115:27017/
+      authentication-database: admin
+      #host: 129.204.120.115
+      #port: 27017
+      #username: admin
+      #password: 123456
       database: app
   redis:
     host: 129.204.120.115
@@ -47,6 +54,12 @@ spring:
       max-wait: 1000
       max-idle: 8
       min-idle: 0
+    #jedis:
+      #pool:
+        #max-active: 12
+        #max-wait: 1000
+        #max-idle: 8
+        #min-idle: 0
     timeout: 5000
   #jpa:
     #hibernate:
@@ -59,6 +72,7 @@ hibernate:
     dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 logging:
+
   level:
     org.hibernate.SQL: DEBUG
     org.spring: WARN
