@@ -137,7 +137,7 @@ class ProductController {
     }
 
     /**
-     * 更新数据
+     * 更新电影数据
      * @param body
      * @return
      */
@@ -171,8 +171,36 @@ class ProductController {
 
         mongoTemplate.findAndModify(query, update, Product.class)*/
 
+        Query query = new Query()
+        if (id) {
+            query.addCriteria(Criteria.where("id").is(id))
+        }
+        Update update = new Update()
+        if (detailsWriter) {
+            update.set("details.writer", detailsWriter)
+        }
+
+
         // update+insert 如果根据条件没有对应的数据,则执行插入
-        mongoTemplate.upsert(query(where("id").is(id)), new Update().set("details.writer", detailsWriter).set("pricing.retail", retail), Product.class)
+        mongoTemplate.upsert(query, update.set("pricing.retail", retail),
+                Product.class)
+
+        return [ret: 0, msg: "修改成功"]
+    }
+
+    /**
+     * 更新音乐数据
+     * @param body
+     * @return
+     */
+    @PostMapping("/modifyAudio")
+    def modifyAudio(@RequestBody Map<String, String> body) {
+        String id = body.get("id")
+        Double retail = body.get("pricing.retail").toDouble()
+
+        // update+insert 如果根据条件没有对应的数据,则执行插入
+        mongoTemplate.upsert(query(where("id").is(id)),
+                new Update().set("pricing.retail", retail), Product.class)
 
         return [ret: 0, msg: "修改成功"]
     }
