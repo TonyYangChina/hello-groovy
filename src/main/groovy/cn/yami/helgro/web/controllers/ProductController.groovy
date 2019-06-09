@@ -1,9 +1,16 @@
 package cn.yami.helgro.web.controllers
 
 import cn.yami.helgro.db.mongo.Product
+import com.mongodb.BasicDBList
+import com.mongodb.BasicDBObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.aggregation.Aggregation
+import org.springframework.data.mongodb.core.aggregation.AggregationOperation
+import org.springframework.data.mongodb.core.aggregation.AggregationOptions
+import org.springframework.data.mongodb.core.aggregation.AggregationResults
+import org.springframework.data.mongodb.core.mapreduce.MapReduceResults
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.Update
@@ -17,7 +24,7 @@ import java.util.regex.Pattern
 
 import static org.springframework.data.mongodb.core.query.Criteria.where
 import static org.springframework.data.mongodb.core.query.Query.query
-import static org.springframework.data.mongodb.core.query.Query.query
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*
 
 @RestController
 @RequestMapping("/product")
@@ -75,6 +82,7 @@ class ProductController {
         mongoTemplate.insert(product)
         // mongoTemplate.save(product, "product")
 
+        //
         // TODO 对简单的数据操作，对复杂的内嵌子对象，是否有不良反应
         // mongoTemplate.upsert(product)
 
@@ -173,7 +181,7 @@ class ProductController {
 
         Query query = new Query()
         if (id) {
-            query.addCriteria(Criteria.where("id").is(id))
+            query.addCriteria(where("id").is(id))
         }
         Update update = new Update()
         if (detailsWriter) {
@@ -213,7 +221,7 @@ class ProductController {
     @PostMapping("/remove")
     def remove(@RequestBody Map<String, String> body) {
         String id = body.get("id")
-        Product product = mongoTemplate.findOne(Query.query(where("id").is(id)), Product.class)
+        Product product = mongoTemplate.findOne(query(where("id").is(id)), Product.class)
         mongoTemplate.remove(product, "product")
 
         return [ret: 0, msg: "删除成功"]
@@ -236,7 +244,7 @@ class ProductController {
 
         Query query = new Query()
         // 一次定义，后期接着使用
-        Criteria criteria = Criteria.where("type").is(type)
+        Criteria criteria = where("type").is(type)
 
         query.addCriteria(criteria)
         /*if (status) {
@@ -246,11 +254,11 @@ class ProductController {
         // 模糊查询
         if (title) {
             Pattern pattern = Pattern.compile('^.*' + title + '.*$', Pattern.CASE_INSENSITIVE)
-            criteria.orOperator(Criteria.where("title").regex(pattern))
+            criteria.orOperator(where("title").regex(pattern))
         }
         if (description) {
             Pattern pattern = Pattern.compile('^.*' + description + '.*$', Pattern.CASE_INSENSITIVE)
-            criteria.orOperator(Criteria.where("description").regex(pattern))
+            criteria.orOperator(where("description").regex(pattern))
         }
 
         // 排序
@@ -264,8 +272,67 @@ class ProductController {
         // TODO find的参数Map.class的作用
         List<Product> products = mongoTemplate.find(query,'product')
         // 数量统计
-        def productsCount = mongoTemplate.count(query, 'product')
+        // def productsCount = mongoTemplate.count(query, 'product')
 
         return [ret: 0, msg: "OK", data: products]
     }
+
+    /**
+     * 查找各个类总受欢迎数
+     */
+    @PostMapping(value="/sumTypeLikeProduct", produces = "application/json")
+    sumTypeLikeProduct(@RequestBody Map<String, String> body) {
+        // String type = body.get("type")
+
+        AggregationOperation o1 = match(where("type").ne(null))
+        AggregationOperation o2 = group("type").sum("likes").as("count")// .first("title").as("title")
+
+        AggregationOperation o3 = sort(Sort.Direction.ASC, "count")
+        AggregationOperation o4 = limit(3)
+
+        // Cursor cursor = mongoTemplate.getCollection(collection).aggregate(pipeLine,AggregationOptions.builder().outputMode(AggregationOptions.OutputMode.CURSOR).build());
+
+        /**
+         *  存在问题：
+         *      1. springboot和mongo版本问题，导致的cursor问题
+         *      解决：升级spring-boot版本从1.5.6.RELEASE到1.5.14.RELEASE
+         */
+        Aggregation aggregation = newAggregation(o1, o2, o3, o4)// .withOptions(new AggregationOptions.Builder().allowDiskUse(true).cursor(new BasicDBObject()).build());
+
+        AggregationResults<Map> aggregationResults = mongoTemplate.aggregate(aggregation, Product.class, Map.class)
+        List<Map> mapList = aggregationResults.mappedResults
+
+        return [ret: 0, msg: "OK", data: mapList]
+    }
+
+
+    /**
+     * 查找不同电影受欢迎程度
+     */
+    @PostMapping(value="/findFilmLikes", produces = "application/json")
+    findFilmLikes(@RequestBody Map<String, String> body) {
+
+        String mapFunction="function(){" +
+                "emit(this.title,this.likes);" +
+                "}"
+
+        String reduceFunction="function(key, values)" +
+                "{return Array.sum(values)" +
+                "};"
+
+        Query query = new Query()
+        Criteria criteria = where("type").is("Film")
+        query.addCriteria(criteria)
+
+        MapReduceResults<BasicDBObject> mapReduce = mongoTemplate.mapReduce(query, "product", mapFunction, reduceFunction, BasicDBObject.class)
+
+        def ele = new HashMap<String, Integer>()
+        if (null != mapReduce) {
+            for (BasicDBObject bo : mapReduce) {
+                ele.put(bo.getString("_id"), bo.get("value") as Integer)
+            }
+        }
+        return [ret: 0, msg: "OK", data: ele]
+    }
+
 }
