@@ -25,6 +25,7 @@ class Product {
     // 上架情况：0-未上架，1-上架
     Integer status
 
+    Integer likes
     Map<String, Object> details
     Map<String, Object> pricing
 }
