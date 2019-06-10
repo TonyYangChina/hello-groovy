@@ -3,11 +3,8 @@ package cn.yami.helgro.web
 import cn.yami.helgro.common.annotation.Log
 import groovy.util.logging.Slf4j
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-
-import javax.servlet.http.HttpServletRequest
 
 /**
  * Groovy 问候
@@ -20,7 +17,7 @@ class SayHelloController {
     @Transactional
     @Log("Hell的say方法")
     @RequestMapping("/say")
-    def say(HttpServletRequest request, Model model) {
+    def say() {
         return "hello groovy"
     }
 
@@ -66,7 +63,7 @@ class SayHelloController {
         // 还是打印java.lang.Integer - 万物皆对象
         println intVal2.class
 
-        println '==========循环、重复操作=========';
+        println '==========循环、重复操作========='
         def arr = ['hapi', 'lulu', 'lili']
         loop(arr)
         // 将字符串作为参数，默认会进行拆分
@@ -172,7 +169,7 @@ class SayHelloController {
      * 闭包
      */
     static void closure() {
-        def acoll = ['hapi', 'lulu', 'lili']
+        def acoll = ["hapi", 'lulu', 'lili']
         /*for (Iterator iter = acoll.iterator(); iter.hasNext();) {
             println iter.next()
         }*/

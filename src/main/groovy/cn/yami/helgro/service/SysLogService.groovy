@@ -1,5 +1,7 @@
 package cn.yami.helgro.service
 
+import cn.yami.helgro.common.domain.SysLog
+
 
 /**
  * 查询系统日志接口
@@ -7,5 +9,5 @@ package cn.yami.helgro.service
  */
 interface SysLogService {
 
-    def findLogByUserId(int userId);
+    List<SysLog> findLogByUserId(int userId);
 }

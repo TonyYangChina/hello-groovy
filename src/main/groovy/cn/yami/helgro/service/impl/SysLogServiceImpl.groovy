@@ -10,7 +10,7 @@ class SysLogServiceImpl implements SysLogService{
 
     @Override
     @Transactional
-    def findLogByUserId(int userId) {
+    List<SysLog> findLogByUserId(int userId) {
         SysLog.findAllByUserId(userId)
     }
 }

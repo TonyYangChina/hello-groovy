@@ -54,7 +54,7 @@ class User {
         remark nullable: true
     }
 
-    @SuppressWarnings("GrUnresolvedAccess")
+    @SuppressWarnings(["GroovyAssignabilityCheck", "GrUnresolvedAccess"])
     static mapping = {
         version false
         titleRights lazy: true

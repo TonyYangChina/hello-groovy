@@ -3,6 +3,7 @@ package cn.yami.helgro.common.constant
 /**
  *  fanwu 编写于 2017/3/6.
  */
+@SuppressWarnings("GroovyUnusedDeclaration")
 abstract class Constants {
     /**
      * 公共服务的内部 token 仅用于测试及内部系统间内网调用

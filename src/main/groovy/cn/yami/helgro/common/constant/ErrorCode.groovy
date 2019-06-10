@@ -3,6 +3,7 @@ package cn.yami.helgro.common.constant
 /**
  *  fanwu 编写于 2017/3/6.
  */
+@SuppressWarnings("GroovyUnusedDeclaration")
 abstract class ErrorCode {
 
     public static final int User_Not_Exist_Code = 80000

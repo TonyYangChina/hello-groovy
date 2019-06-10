@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils
 /**
  *  fanwu 编写于 2017/3/6.
  */
+@SuppressWarnings("GroovyUnusedDeclaration")
 abstract class Validator {
 
     public static final int GAP = 100 * 60 * 1000

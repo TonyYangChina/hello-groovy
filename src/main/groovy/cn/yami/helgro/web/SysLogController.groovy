@@ -7,7 +7,6 @@ import cn.yami.helgro.service.SysLogService
 import cn.yami.helgro.service.UserService
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -29,7 +28,7 @@ class SysLogController {
 
     // @Log("用户操作日志列表")
     @PostMapping(value = "/list", produces = "application/json")
-    def logList(HttpServletRequest request, Model model) {
+    def logList(HttpServletRequest request) {
         def token = request.getHeader(Constants.Token_Header_Name)
         User user = userService.findUserByToken(token)
 

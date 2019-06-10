@@ -28,6 +28,7 @@ interface UserService {
      * @param token Token
      * @return 通过返回 true，错误返回 false
      */
+    @SuppressWarnings("GroovyUnusedDeclaration")
     def validateToken(String uid, String token)
 
     /*根据token查找用户*/

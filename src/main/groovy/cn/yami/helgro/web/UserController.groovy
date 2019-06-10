@@ -3,9 +3,7 @@ package cn.yami.helgro.web
 import cn.yami.helgro.common.constant.Constants
 import cn.yami.helgro.common.constant.ErrorCode
 import cn.yami.helgro.common.util.Validator
-import cn.yami.helgro.db.Role
 import cn.yami.helgro.db.User
-import cn.yami.helgro.db.UserRole
 import cn.yami.helgro.service.UserService
 import groovy.util.logging.Slf4j
 import org.apache.commons.lang3.StringUtils

@@ -17,7 +17,6 @@ import java.util.regex.Pattern
 
 import static org.springframework.data.mongodb.core.query.Criteria.where
 import static org.springframework.data.mongodb.core.query.Query.query
-import static org.springframework.data.mongodb.core.query.Query.query
 
 @RestController
 @RequestMapping("/product")
@@ -173,7 +172,7 @@ class ProductController {
 
         Query query = new Query()
         if (id) {
-            query.addCriteria(Criteria.where("id").is(id))
+            query.addCriteria(where("id").is(id))
         }
         Update update = new Update()
         if (detailsWriter) {
@@ -213,7 +212,7 @@ class ProductController {
     @PostMapping("/remove")
     def remove(@RequestBody Map<String, String> body) {
         String id = body.get("id")
-        Product product = mongoTemplate.findOne(Query.query(where("id").is(id)), Product.class)
+        Product product = mongoTemplate.findOne(query(where("id").is(id)), Product.class)
         mongoTemplate.remove(product, "product")
 
         return [ret: 0, msg: "删除成功"]
@@ -236,7 +235,7 @@ class ProductController {
 
         Query query = new Query()
         // 一次定义，后期接着使用
-        Criteria criteria = Criteria.where("type").is(type)
+        Criteria criteria = where("type").is(type)
 
         query.addCriteria(criteria)
         /*if (status) {
@@ -246,11 +245,11 @@ class ProductController {
         // 模糊查询
         if (title) {
             Pattern pattern = Pattern.compile('^.*' + title + '.*$', Pattern.CASE_INSENSITIVE)
-            criteria.orOperator(Criteria.where("title").regex(pattern))
+            criteria.orOperator(where("title").regex(pattern))
         }
         if (description) {
             Pattern pattern = Pattern.compile('^.*' + description + '.*$', Pattern.CASE_INSENSITIVE)
-            criteria.orOperator(Criteria.where("description").regex(pattern))
+            criteria.orOperator(where("description").regex(pattern))
         }
 
         // 排序
@@ -264,7 +263,7 @@ class ProductController {
         // TODO find的参数Map.class的作用
         List<Product> products = mongoTemplate.find(query,'product')
         // 数量统计
-        def productsCount = mongoTemplate.count(query, 'product')
+        // def productsCount = mongoTemplate.count(query, 'product')
 
         return [ret: 0, msg: "OK", data: products]
     }

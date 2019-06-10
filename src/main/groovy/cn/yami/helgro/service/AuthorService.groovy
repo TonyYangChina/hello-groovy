@@ -1,7 +1,6 @@
 package cn.yami.helgro.service
 
 import cn.yami.helgro.db.Author
-import cn.yami.helgro.db.User
 
 
 /**
@@ -10,6 +9,7 @@ import cn.yami.helgro.db.User
 interface AuthorService {
 
     /*根据token查找用户*/
+    @SuppressWarnings("GroovyUnusedDeclaration")
     Author findAuthorByParam(Author author)
 
 }

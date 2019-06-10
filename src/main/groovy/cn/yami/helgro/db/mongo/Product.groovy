@@ -2,7 +2,6 @@ package cn.yami.helgro.db.mongo
 
 import groovy.transform.Canonical
 import org.springframework.data.annotation.Id
-import org.springframework.data.mongodb.core.index.Index
 
 /**
  * 商品
